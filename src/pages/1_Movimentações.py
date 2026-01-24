@@ -16,6 +16,32 @@ st.info(
 )
 # --------------------------
 
+# --- ASSINATURA NO SIDEBAR ---
+with st.sidebar:
+    st.markdown("### 👨‍💻 Sobre o Desenvolvedor")
+    
+    st.markdown("**Adryel Almeida**")
+    st.caption("Engenharia de Computação | Engenharia de Dados")
+    
+    st.markdown("---")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.link_button("💼 LinkedIn", "https://www.linkedin.com/in/adryel-almeida-052365321/")
+    
+    with col2:
+        st.link_button("🐙 GitHub", "https://github.com/Adryel7")
+    
+    st.markdown("---")
+    st.info(
+        "**SGE-Analytics v2.0**\n\n"
+        "Sistema migrado de planilhas Excel para "
+        "uma arquitetura escalável em Python e SQL na Nuvem."
+    )
+
+# --------------------------
+
 # Configuração da Página
 st.set_page_config(page_title="Controle de Movimentações", layout="wide")
 
