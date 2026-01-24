@@ -1,0 +1,11 @@
+# .gitignore
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.streamlit/secrets.toml
+*.db
+.DS_Store
+# Se quiser ignorar arquivos de log do VS Code
+.vscode/

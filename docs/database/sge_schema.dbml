@@ -1,0 +1,50 @@
+// Tabela de Categorias
+Table categories {
+  id integer [primary key, increment]
+  name varchar(50) [not null]
+}
+
+// Tabela de Produtos
+Table products {
+  id integer [primary key, increment]
+  name varchar(100) [not null]
+  description text
+  category_id integer [ref: > categories.id]
+  quantity_in_stock integer [default: 0, note: "Saldo Atualizado automaticamente"]
+  min_balance integer [default: 0, note: "Ponto de Alerta"]
+}
+
+// Centros de Custo / Departamentos
+Table departments {
+  id integer [primary key, increment]
+  name varchar(50) [not null]
+}
+
+// Gerentes de Inventário (Quem autoriza ou recebe)
+Table inventory_managers {
+  id integer [primary key, increment]
+  name varchar(100) [not null]
+}
+
+// Representantes (Quem retira o material para o setor)
+Table representatives {
+  id integer [primary key, increment]
+  name varchar(100) [not null]
+  department_id integer [ref: > departments.id]
+}
+
+// Histórico de Movimentações (Log)
+Table inventory_transactions {
+  id integer [primary key, increment]
+  type varchar(10) [note: "'IN' (Entrada) ou 'OUT' (Saída)"]
+  product_id integer [ref: > products.id]
+  quantity integer [not null]
+  transaction_date date [not null]
+  
+  // Rastreabilidade
+  department_id integer [ref: > departments.id, note: "Destino (Saída) ou Estoque Geral (Entrada)"]
+  representative_id integer [ref: > representatives.id, null]
+  inventory_manager_id integer [ref: > inventory_managers.id, note: "Quem autorizou/recebeu"]
+  
+  obs text [note: "Motivo, Ordem de Serviço ou Observações"]
+}
