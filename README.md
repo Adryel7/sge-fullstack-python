@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📊 SGE-Analytics (v2.0) - Sistema de Gestão de Estoque Full-Stack
 
 > **De Planilhas Manuais para uma Aplicação Web Escalável.**
