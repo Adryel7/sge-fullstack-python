@@ -12,12 +12,10 @@ from crud.inventory_managers import list_managers
 from crud.transactions import list_transactions, delete_transaction, update_transaction
 
 st.info(
-
     "📢 **Aviso:** Este é um ambiente de demonstração compartilhado. "
     "Sinta-se à vontade para testar as funcionalidades. "
     "Os dados podem ser resetados periodicamente. "
     "Senha para a Área Administrativa: 1234"
-
 )
 
 # --------------------------
@@ -181,26 +179,54 @@ with tab_admin:
             st.subheader("🗑️ Exclusão de Cadastros")
             tipo_del = st.selectbox("Tipo", ["Produto", "Categoria", "Representante"])
             
+            sel = None # Inicializa variavel
+            id_sel = None
+            func = None
+
             if tipo_del == "Produto":
                 names = [p['name'] for p in raw_prods]
                 sel = st.selectbox("Item", names)
                 func = delete_product
-                id_sel = next(p['id'] for p in raw_prods if p['name'] == sel)
+                if sel:
+                    id_sel = next(p['id'] for p in raw_prods if p['name'] == sel)
+
             elif tipo_del == "Categoria":
                 names = [c['name'] for c in raw_cats]
                 sel = st.selectbox("Item", names)
                 func = delete_category
-                id_sel = next(c['id'] for c in raw_cats if c['name'] == sel)
-            elif tipo_del == "Representante":
-                names = [r['name'] for r in raw_reps if r['name'] != "SISTEMA DE ENTRADA"]
-                sel = st.selectbox("Item", names)
-                func = delete_representative
-                id_sel = next(r['id'] for r in raw_reps if r['name'] == sel)
+                if sel:
+                    id_sel = next(c['id'] for c in raw_cats if c['name'] == sel)
 
-            if st.button(f"Excluir '{sel}'"):
+            elif tipo_del == "Representante":
+                # LÓGICA NOVA SOLICITADA
+                # 1. Mapear Setores
+                dept_dict = {d['name']: d['id'] for d in raw_depts}
+                
+                # 2. Escolher Setor Primeiro
+                dept_escolhido = st.selectbox("Filtrar por Setor:", list(dept_dict.keys()))
+                id_dept_escolhido = dept_dict[dept_escolhido]
+
+                # 3. Filtrar Representantes daquele setor (Excluindo Sistema)
+                reps_filtrados = [
+                    r for r in raw_reps 
+                    if r['department_id'] == id_dept_escolhido 
+                    and r['name'] != "SISTEMA DE ENTRADA"
+                ]
+
+                if not reps_filtrados:
+                    st.warning(f"Não há representantes cadastrados no setor {dept_escolhido}.")
+                    st.stop() # Interrompe aqui para não dar erro no botão abaixo
+                else:
+                    names = [r['name'] for r in reps_filtrados]
+                    sel = st.selectbox("Selecione o Representante:", names)
+                    func = delete_representative
+                    if sel:
+                        id_sel = next(r['id'] for r in reps_filtrados if r['name'] == sel)
+
+            if sel and st.button(f"Excluir '{sel}'"):
                 try:
                     if func(id_sel): st.success("Feito!"); time.sleep(1); st.rerun()
-                    else: st.warning("Erro.")
+                    else: st.warning("Erro ao excluir (possui vínculos?).")
                 except Exception as e: st.error(f"Erro: {e}")
     elif senha:
         st.error("Senha incorreta.")
