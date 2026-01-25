@@ -1,66 +1,78 @@
-<<<<<<< HEAD
-# 📊 SGE-Analytics (v2.0) - Sistema de Gestão de Estoque Full-Stack
+# 📊 SGE-Analytics (v2.0) - Inteligência de Estoque
 
-> **De Planilhas Manuais para uma Aplicação Web Escalável.**
-> Uma solução robusta de gerenciamento de inventário migrada de Excel para Python, focada em integridade de dados e visualização em tempo real.
+> **De Planilhas Estruturadas para uma Arquitetura de Dados em Nuvem.**
+> Uma solução *Full-Stack* de gerenciamento de inventário migrada de arquivos planos (`.xlsx`) para Banco de Dados Relacional, com foco em integridade transacional e análise em tempo real.
 
-![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
-![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![Stack](https://img.shields.io/badge/Backend-PostgreSQL%20%7C%20SQLAlchemy-336791)
-![Frontend](https://img.shields.io/badge/Frontend-Streamlit%20%7C%20Plotly-FF4B4B)
+[![App Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://sge-fullstack-python-qnayvqgpad6lnabr9yea35.streamlit.app)
+![Status](https://img.shields.io/badge/Status-Produção-brightgreen)
+![DB](https://img.shields.io/badge/Database-PostgreSQL%2016-336791)
+![ETL](https://img.shields.io/badge/Data-ETL%20%26%20Seeding-orange)
 
 ---
 
-## 🚀 A Evolução: Do Excel para Full-Stack
-Este projeto representa a **versão 2.0** de um sistema de controle de estoque. O objetivo foi refatorar uma solução baseada em planilhas (`.xlsx`) para uma arquitetura de software profissional, resolvendo problemas de escalabilidade, concorrência e integridade de dados.
+## 🎯 Visão Geral do Projeto
 
-### 🆚 Antes e Depois
+Este projeto demonstra a **modernização de um processo de dados**, saindo de controles manuais suscetíveis a falhas para uma aplicação web robusta. O sistema garante que cada movimentação de estoque respeite as regras de negócio e integridade referencial (ACID), permitindo análises confiáveis.
 
-| **Versão 1.0 (Legado)** | **Versão 2.0 (Atual)** |
-| :--- | :--- |
-| **Tecnologia:** Excel / LibreOffice | **Tecnologia:** Python (Streamlit) + PostgreSQL |
-| **Dados:** Arquivo local plano (Flat file) | **Dados:** Banco Relacional na Nuvem (Neon Tech) |
-| **Risco:** Erros manuais e falta de log | **Segurança:** Tipagem forte, ORM e Transações Atômicas |
-| **Acesso:** Monousuário / Arquivo travado | **Acesso:** Web App Multiúsuário |
+👉 **[Acesse a Demonstração Online Aqui](https://sge-fullstack-python-qnayvqgpad6lnabr9yea35.streamlit.app)**
 
-#### 📸 Visualização da Mudança
+---
 
-**v2.0: Dashboard Interativo (Python & Plotly)**
+## 🔄 A Migração: Engenharia de Dados Aplicada
 
-Clique na imagem abaixo para ver a demonstração em vídeo (arquivo .webm):
+O principal desafio deste projeto foi reestruturar dados que viviam em silos (planilhas isoladas) para um modelo unificado.
 
-[![](docs/assets/dashboard.png)](docs/assets/dashboard.webm)
+| Característica | ❌ Versão Excel v1 | ✅ Versão Atual (SGE v2.0) |
+| :--- | :--- | :--- |
+| **Armazenamento** | Arquivo Local (`.xlsx`) | **PostgreSQL (Neon Tech Serverless)** |
+| **Modelagem** | Tabela Flat (Desnormalizada) | **Modelo Relacional (3NF)** |
+| **Integridade** | Validação manual / Visual | **Constraint Check & Foreign Keys** |
+| **Escalabilidade** | Limitada pelo arquivo/memória | **Nuvem / Consultas SQL Otimizadas** |
+| **Segurança** | Arquivo aberto | **Credenciais de Ambiente (.env)** |
 
-> *O vídeo acima demonstra a interatividade dos filtros e a atualização dos gráficos em tempo real.*
-
+### 📸 Comparativo Visual
 **v1.0: Planilha Original (Excel)**
 <img width="800" alt="Dashboard Excel v1" src="https://github.com/user-attachments/assets/c5eed63f-c661-4d43-b54e-c8297fe1878e" />
+> O arquivo Excel(v1.0) foi preservado na pasta [`/legacy_v1`](./legacy_v1) para fins de auditoria e comparação histórica.
 
-> 📂 **Nota:** O projeto original em Excel foi mantido para fins de histórico e comparação. Você pode acessá-lo na pasta [`/legacy_v1`](./legacy_v1).
-
----
-
-## 🛠️ Stack Tecnológica (v2.0)
-
-O sistema foi construído seguindo princípios de **Engenharia de Software** e **Engenharia de Dados**:
-
-* **Frontend/App:** [Streamlit](https://streamlit.io/) (Framework Python para Data Apps).
-* **Banco de Dados:** PostgreSQL 17 (Hospedagem Serverless via Neon).
-* **ORM (Object-Relational Mapping):** [SQLAlchemy](https://www.sqlalchemy.org/) para abstração e segurança das queries.
-* **Análise & Visualização:** Pandas (Manipulação de DataFrames) e Plotly (Gráficos Interativos).
-* **Versionamento:** Git & GitHub.
+**V2.0(atual): Dashboard Analítico (Python & Plotly):**
+![Dashboard Analytics](docs/assets/dashboard.png)
 
 ---
 
-## 🗄️ Modelagem de Dados e Arquitetura
+## 🛠️ Stack Tecnológica e Arquitetura
 
-Diferente da versão em planilha, a v2.0 utiliza um banco de dados normalizado (3NF) para garantir a consistência das transações.
+O sistema foi desenhado com foco em **modularidade** e **abstração de dados**:
 
-**Diagrama Entidade-Relacionamento (DER):**
+* **Camada de Dados (Storage):** PostgreSQL (NeonDB).
+* **Camada de Aplicação (ORM):** [SQLAlchemy](https://www.sqlalchemy.org/) - Utilizado para mapeamento objeto-relacional, garantindo que o código Python manipule o banco de forma segura contra *SQL Injection*.
+* **Camada de Visualização (Frontend):** Streamlit - Escolhido pela capacidade de prototipagem rápida de Dashboards de Dados.
+* **Análise Exploratória:** Pandas para manipulação de DataFrames e Plotly para visualização dinâmica.
+
+---
+
+## 🗄️ Modelagem de Dados (Schema Design)
+
+O banco de dados foi normalizado para garantir a **Terceira Forma Normal (3NF)**, eliminando redundâncias e anomalias de atualização.
 
 ![DER do Sistema](docs/database/sge_der_v2.png)
 
-> 🔗 **Fonte:** O código DBML do esquema está disponível em [`docs/database/sge_schema.dbml`](docs/database/sge_schema.dbml).
+> 🔗 O esquema completo documentado em código encontra-se em [`docs/database/sge_schema.dbml`](docs/database/sge_schema.dbml).
+
+---
+
+## ⚙️ Scripts de Governança e Carga de Dados
+
+Além da aplicação principal, foram desenvolvidos scripts utilitários na pasta [`/Scripts`](./Scripts) para gerenciar o ciclo de vida dos dados (Data Lifecycle):
+
+1.  **`create_system_entities.py` (Bootstrapping):**
+    * Responsavel por criar as primeiras entidadesdo sistema.
+
+2.  **`seed_corporate.py` (Data Seeding / Mock):**
+    * Script de ETL que popula o banco com dados fictícios corporativos. Fundamental para testes de carga e para validar a performance das queries analíticas no dashboard sem expor dados reais.
+
+3.  **`reset_bd.py` (Infrastructure):**
+    * Automação para limpar o BAnco de dados. Utilizado em ambiente de desenvolvimento para garantir testes limpos e iterativos.
 
 ---
 
@@ -68,53 +80,24 @@ Diferente da versão em planilha, a v2.0 utiliza um banco de dados normalizado (
 
 ```text
 /
-├── docs/                  # Documentação Técnica
-│   ├── assets/            # Mídias (Vídeos de demo, Logos)
-│   └── database/          # Arquivos do Banco (DER imagem e código .dbml)
-├── legacy_v1/             # Versão antiga do projeto (Excel/LibreOffice)
-├── scripts/               # Scripts auxiliares (Reset de DB, Carga de Dados)
-├── src/                   # Código Fonte da Aplicação
-│   ├── crud/              # Lógica de Negócio (Controllers)
-│   ├── pages/             # Páginas do Streamlit (Movimentações, Cadastros)
-│   ├── database.py        # Conexão Singleton com PostgreSQL
-│   ├── models.py          # Definição das Tabelas (SQLAlchemy Models)
-│   └── Home.py            # [Entry Point] Dashboard Principal
-├── requirements.txt       # Dependências do projeto
-└── README.md              # Documentação Principal
-```
-## 💻 Como Rodar o Projeto Localmente
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/Adryel7/sge-analytics-v2.git](https://github.com/Adryel7/sge-analytics-v2.git)
-    cd sge-analytics-v2
-    ```
-
-2.  **Crie um ambiente virtual:**
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate  # Linux/Mac
-    # .venv\Scripts\activate   # Windows
-    ```
-
-3.  **Instale as dependências:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Configure as Credenciais:**
-    Crie uma pasta `.streamlit` na raiz e um arquivo `secrets.toml` dentro dela. Adicione a string de conexão do seu banco (Postgres Local ou Neon):
-    ```toml
-    # .streamlit/secrets.toml
-    DATABASE_URL = "postgresql://usuario:senha@host:5432/nome_do_banco"
-    ```
-
-5.  **Execute a aplicação:**
-    ```bash
-    streamlit run src/Home.py
-    ```
-
----
+├── docs/                  
+│   ├── assets/            # Prints de tela
+│   └── database/          # Documentação do Schema (DER e DBML)
+├── legacy_v1/             # Histórico: Versão antiga em Excel
+├── Scripts/               # Automação de Banco de Dados
+│   ├── create_system_entities.py
+│   ├── reset_bd.py
+│   └── seed_corporate.py
+├── src/                   # Core da Aplicação
+│   ├── crud/              # Controllers e Regras de Negócio
+│   ├── pages/             # Interfaces do Usuário
+│   ├── database.py        # Conector Singleton (Engine SQLAlchemy)
+│   ├── models.py          # Definição das Tabelas (Schema)
+│   └── Home.py            # [Entry Point] Dashboard
+├── requirements.txt       # Dependências
+└── README.md              # Documentação Técnica
+``
 
 ## 👤 Autor
 
@@ -122,6 +105,4 @@ Desenvolvido por **Adryel Almeida**
 * 💼 [LinkedIn](https://www.linkedin.com/in/adryel-almeida-052365321/)
 * 📂 [Portfólio GitHub](https://github.com/Adryel7)
 
----
 
-*Este projeto é parte do meu portfólio de transição para Engenharia de Dados.*
