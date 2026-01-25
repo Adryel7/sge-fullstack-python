@@ -34,6 +34,9 @@ with st.sidebar:
     
     with col2:
         st.link_button("🐙 GitHub", "https://github.com/Adryel7")
+        
+    with col1:
+        st.link_button("📂 Repositório", "https://github.com/Adryel7/sge-fullstack-python")
     
     st.markdown("---")
     st.info(

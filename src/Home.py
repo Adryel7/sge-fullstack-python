@@ -16,32 +16,6 @@ st.info(
 )
 # --------------------------
 
-# --- ASSINATURA NO SIDEBAR ---
-with st.sidebar:
-    st.markdown("### 👨‍💻 Sobre o Desenvolvedor")
-    
-    st.markdown("**Adryel Almeida**")
-    st.caption("Engenharia de Computação | Engenharia de Dados")
-    
-    st.markdown("---")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.link_button("💼 LinkedIn", "https://www.linkedin.com/in/adryel-almeida-052365321/")
-    
-    with col2:
-        st.link_button("🐙 GitHub", "https://github.com/Adryel7")
-    
-    st.markdown("---")
-    st.info(
-        "**SGE-Analytics v2.0**\n\n"
-        "Sistema migrado de planilhas Excel para "
-        "uma arquitetura escalável em Python e SQL na Nuvem."
-    )
-
-# --------------------------
-
 # Configuração da Página
 st.set_page_config(page_title="Dashboard Gerencial", layout="wide")
 
@@ -86,7 +60,7 @@ if df_prods.empty:
     st.stop()
 
 # ==============================================================================
-# 2. BARRA LATERAL (FILTROS)
+# 2. BARRA LATERAL (FILTROS E ASSINATURA)
 # ==============================================================================
 st.sidebar.header("📅 Filtro de Período")
 data_inicio = st.sidebar.date_input("Data Inicial", date.today() - timedelta(days=30), format="DD/MM/YYYY")
@@ -102,6 +76,35 @@ if not df_trans.empty:
 st.title(f"📊 Dashboard Gerencial")
 st.caption(f"Período: {data_inicio.strftime('%d/%m/%Y')} a {data_fim.strftime('%d/%m/%Y')}")
 
+#  ASSINATURA 
+with st.sidebar:
+    st.markdown("### 👨‍💻 Sobre o Desenvolvedor")
+    
+    st.markdown("**Adryel Almeida**")
+    st.caption("Engenharia de Computação | Engenharia de Dados")
+    
+    st.markdown("---")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.link_button("💼 LinkedIn", "https://www.linkedin.com/in/adryel-almeida-052365321/")
+    
+    with col2:
+        st.link_button("🐙 GitHub", "https://github.com/Adryel7")
+        
+    with col1:
+        st.link_button("📂 Repositório", "https://github.com/Adryel7/sge-fullstack-python")
+    
+    st.markdown("---")
+    st.info(
+        "**SGE-Analytics v2.0**\n\n"
+        "Sistema migrado de planilhas Excel para "
+        "uma arquitetura escalável em Python e SQL na Nuvem."
+    )
+
+# --------------------------
+
 # ==============================================================================
 # 3. CÁLCULO DE ALERTAS E KPIs
 # ==============================================================================
@@ -116,7 +119,7 @@ col_kpi2.metric("🚨 Alerta de Reposição (+20%)", len(df_alertas), delta_colo
 st.markdown("---")
 
 # ==============================================================================
-# 4. TABELA RESUMO DE MOVIMENTAÇÕES (NOVIDADE AQUI) 🆕
+# 4. TABELA RESUMO DE MOVIMENTAÇÕES
 # ==============================================================================
 st.subheader("📋 Resumo de Movimentações por Produto")
 st.caption("Total de entradas e saídas no período selecionado vs. Saldo Atual.")
