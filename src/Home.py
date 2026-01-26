@@ -8,6 +8,24 @@ from crud.products import list_products
 from crud.transactions import list_transactions
 from crud.departments import list_departments
 
+
+# --- DEBUG DE CONEXÃO (Apague depois de resolver) ---
+import os
+try:
+    # Tenta pegar a string de conexão (sem mostrar a senha)
+    db_name = st.secrets["postgres"]["dbname"]
+    db_host = st.secrets["postgres"]["host"]
+    st.warning(f"🕵️ O App está conectado em: HOST={db_host} | BANCO={db_name}")
+    
+    # Tenta listar as tabelas que o App consegue ver
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        result = conn.execute(text("SELECT tablename FROM pg_tables WHERE schemaname = 'public';"))
+        tabelas = [row[0] for row in result]
+        st.error(f"📋 Tabelas encontradas pelo App: {tabelas}")
+except Exception as e:
+    st.error(f"Erro no Debug: {e}")
+# ----------------------------------------------------
 # --- AVISO DE PORTFÓLIO -
 st.info(
     "📢 **Aviso:** Este é um ambiente de demonstração compartilhado. "

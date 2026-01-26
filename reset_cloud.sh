@@ -4,7 +4,7 @@
 # SCRIPT DE RESET ULTRA-CONFIÁVEL (LOCAL -> NUVEM)
 # ========================================================
 
-PROJ_DIR="$HOME/Projetos/sge-analytics-v2"
+PROJ_DIR="$HOME/Armazenamento/Documentos/Projetos Pessoais/controle_estoque"
 cd "$PROJ_DIR"
 
 # 1. Carrega variáveis
