@@ -11,12 +11,14 @@ from crud.representatives import list_representatives, delete_representative
 from crud.inventory_managers import list_managers
 from crud.transactions import list_transactions, delete_transaction, update_transaction
 
+# --- AVISO DE PORTFÓLIO ---
 st.info(
-    "📢 **Aviso:** Este é um ambiente de demonstração compartilhado. "
-    "Sinta-se à vontade para testar as funcionalidades. "
-    "Os dados podem ser resetados periodicamente. "
+    "📢 **Ambiente de Demonstração:** "
+    "Sinta-se à vontade para cadastrar produtos e testar movimentações. "
+    "Para garantir a integridade do portfólio, **os dados são resetados toda segunda-feira às 20h.**"
     "Senha para a Área Administrativa: 1234"
 )
+# --------------------------
 
 # --- ASSINATURA NO SIDEBAR ---
 with st.sidebar:
