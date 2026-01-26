@@ -8,7 +8,7 @@ from crud.products import list_products
 from crud.transactions import list_transactions
 from crud.departments import list_departments
 
-# --- AVISO DE PORTFÓLIO ---
+# --- AVISO DE PORTFÓLIO -
 st.info(
     "📢 **Aviso:** Este é um ambiente de demonstração compartilhado. "
     "Sinta-se à vontade para testar as funcionalidades. "
