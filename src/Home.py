@@ -9,22 +9,29 @@ from crud.transactions import list_transactions
 from crud.departments import list_departments
 
 
-# --- DEBUG DE CONEXÃO (Apague depois de resolver) ---
-import os
+import streamlit as st
 try:
-    # Tenta pegar a string de conexão (sem mostrar a senha)
-    db_name = st.secrets["postgres"]["dbname"]
-    db_host = st.secrets["postgres"]["host"]
-    st.warning(f"🕵️ O App está conectado em: HOST={db_host} | BANCO={db_name}")
+    st.divider()
+    st.warning("🕵️ Investigação de Segredos")
     
-    # Tenta listar as tabelas que o App consegue ver
-    from sqlalchemy import text
-    with engine.connect() as conn:
-        result = conn.execute(text("SELECT tablename FROM pg_tables WHERE schemaname = 'public';"))
-        tabelas = [row[0] for row in result]
-        st.error(f"📋 Tabelas encontradas pelo App: {tabelas}")
+    # 1. Mostra quais seções existem (Ex: "postgres", "connections", etc)
+    chaves_principais = list(st.secrets.keys())
+    st.write(f"🔑 Seções encontradas: {chaves_principais}")
+
+    # 2. Se existir 'postgres', mostra o que tem dentro (sem mostrar a senha)
+    if "postgres" in st.secrets:
+        chaves_internas = list(st.secrets["postgres"].keys())
+        st.write(f"📂 Dentro de [postgres]: {chaves_internas}")
+        
+        # Confere se o banco é o mesmo do seu script
+        banco = st.secrets["postgres"].get("dbname", "NÃO ENCONTRADO")
+        st.info(f"🗄️ Nome do Banco configurado: {banco}")
+    else:
+        st.error("❌ A seção [postgres] não existe nos Secrets!")
+
 except Exception as e:
-    st.error(f"Erro no Debug: {e}")
+    st.error(f"Erro ao ler secrets: {e}")
+st.divider()
 # ----------------------------------------------------
 # --- AVISO DE PORTFÓLIO -
 st.info(
