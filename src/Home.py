@@ -8,31 +8,6 @@ from crud.products import list_products
 from crud.transactions import list_transactions
 from crud.departments import list_departments
 
-
-import streamlit as st
-try:
-    st.divider()
-    st.warning("🕵️ Investigação de Segredos")
-    
-    # 1. Mostra quais seções existem (Ex: "postgres", "connections", etc)
-    chaves_principais = list(st.secrets.keys())
-    st.write(f"🔑 Seções encontradas: {chaves_principais}")
-
-    # 2. Se existir 'postgres', mostra o que tem dentro (sem mostrar a senha)
-    if "postgres" in st.secrets:
-        chaves_internas = list(st.secrets["postgres"].keys())
-        st.write(f"📂 Dentro de [postgres]: {chaves_internas}")
-        
-        # Confere se o banco é o mesmo do seu script
-        banco = st.secrets["postgres"].get("dbname", "NÃO ENCONTRADO")
-        st.info(f"🗄️ Nome do Banco configurado: {banco}")
-    else:
-        st.error("❌ A seção [postgres] não existe nos Secrets!")
-
-except Exception as e:
-    st.error(f"Erro ao ler secrets: {e}")
-st.divider()
-# ----------------------------------------------------
 # --- AVISO DE PORTFÓLIO -
 st.info(
     "📢 **Aviso:** Este é um ambiente de demonstração compartilhado. "

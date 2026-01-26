@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # ========================================================
-# SCRIPT DE RESET ULTRA-CONFIÁVEL (LOCAL -> NUVEM)
+# SCRIPT DE RESET BLINDADO (RESTAURAÇÃO + PERMISSÕES)
 # ========================================================
 
-PROJ_DIR="$HOME/Armazenamento/Documentos/Projetos Pessoais/controle_estoque"
+PROJ_DIR="$HOME/Projetos/sge-analytics-v2"
 cd "$PROJ_DIR"
 
-# 1. Carrega variáveis
+# 1. Carrega variáveis do .env
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 else
@@ -15,18 +15,11 @@ else
     exit 1
 fi
 
-echo "--- [$(date)] INICIANDO RESET NO NEON ---"
+echo "--- [$(date)] 1. INICIANDO RESTAURAÇÃO ---"
 
-# 2. Define senha para automação
 export PGPASSWORD=$NEON_PASS
 
-# 3. PG_RESTORE COM FLAGS DE SEGURANÇA
-# -n public: Garante que caia no schema certo
-# --no-owner: Remove vínculos com seu usuário local 'adryel'
-# --no-privileges: Ignora permissões de sistema do seu PC
-# --clean: Apaga as tabelas antes de restaurar
-# --if-exists: Evita erro se a tabela ainda não existir no Neon
-
+# 2. Restaura os dados (Forçando Schema Public)
 /usr/lib/postgresql/17/bin/pg_restore \
     -h $NEON_HOST \
     -p 5432 \
@@ -40,7 +33,17 @@ export PGPASSWORD=$NEON_PASS
     -v \
     "backup_padrao.backup"
 
-# 4. Limpeza de rastro de senha
-unset PGPASSWORD
+echo "--- [$(date)] 2. CORRIGINDO PERMISSÕES (FIX) ---"
 
-echo "--- [$(date)] RESET CONCLUÍDO COM SUCESSO ---"
+# 3. O PULO DO GATO: Comandos SQL para garantir acesso total
+# Isso garante que o usuário do App consiga ler as tabelas recém-criadas
+psql "postgres://$NEON_USER:$NEON_PASS@$NEON_HOST/$NEON_DB?sslmode=require" -c "
+    GRANT USAGE ON SCHEMA public TO neondb_owner;
+    GRANT CREATE ON SCHEMA public TO neondb_owner;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO neondb_owner;
+    GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO neondb_owner;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO neondb_owner;
+"
+
+unset PGPASSWORD
+echo "--- [$(date)] PROCESSO FINALIZADO ---"

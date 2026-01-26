@@ -10,5 +10,6 @@ venv/
 # Se quiser ignorar arquivos de log do VS Code
 .vscode/
 conexao_com_bd.txt
-.backup
-.sh
+*.backup
+reset_cloud.sh
+reset_log.txt
