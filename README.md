@@ -79,7 +79,6 @@ Além da aplicação principal, foram desenvolvidos scripts utilitários na past
 ## 📂 Estrutura do Repositório
 
 ```text
-/
 
 ├── docs/                  
 │   ├── assets/            # Prints de tela
@@ -97,7 +96,7 @@ Além da aplicação principal, foram desenvolvidos scripts utilitários na past
 │   └── Home.py            # [Entry Point] Dashboard
 ├── requirements.txt       # Dependências
 └── README.md              # Documentação Técnica
-``
+```
 
 ## 👤 Autor
 
